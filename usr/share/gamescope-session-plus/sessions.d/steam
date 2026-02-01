@@ -101,7 +101,7 @@ export XCURSOR_THEME=steam
 export XCURSOR_SCALE=256
 
 if command -v kwriteconfig6 >/dev/null; then
-  # Chromium (and therefore Steam) ignore XCursor and use on the GTK config
+  # Chromium (and therefore Steam) ignore XCursor and use only the GTK config
   kwriteconfig6 --file gtk-3.0/settings.ini  --group Settings --key gtk-cursor-theme-name steam
 fi
 
