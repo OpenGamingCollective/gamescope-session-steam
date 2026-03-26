@@ -7,13 +7,18 @@
 # steamos-update --enable-duplicate-detection       -- should perform an update
 # steamos-update                                    -- should perform an update
 
+# Hook for custom OS script
+for OS_UPDATE_SCRIPT in \
+    "/usr/lib/os-update" \
+    "/usr/libexec/os-update"
+do
+    if [ -f "$OS_UPDATE_SCRIPT" ]; then
+        exec "${OS_UPDATE_SCRIPT}" "$@"
+    fi
+done
 
 while [[ $# -gt 0 ]]; do
   case $1 in
-    check)
-      CHECK=1
-      shift
-      ;;
     --supports-duplicate-detection)
       EXIT=1
       shift
@@ -24,15 +29,9 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-
-if command -v frzr-deploy > /dev/null; then
-	if [ -n "$CHECK" ]; then
-		frzr-deploy --check
-	elif [ -n "$EXIT" ]; then
-		exit 0
-	else
-		frzr-deploy --steam-progress
-	fi
-else
-    exit 7 # tells Steam client there is no update to perform
+# Exit gracefully if no script was found
+if [ -n "$EXIT" ]; then
+  exit 0
+elif
+  exit 7 
 fi
