@@ -9,7 +9,7 @@ function short_session_recover {
         tar xf /etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz -C ~/.local/share/Steam
     fi
     # change session to desktop as fallback
-    steamos-session-select desktop
+    steamosctl switch-to-desktop-mode
 }
 
 function post_gamescope_start {
